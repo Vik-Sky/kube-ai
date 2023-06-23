@@ -1,0 +1,10 @@
+✨ Attempting to apply the following manifest:
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-configmap
+data:
+  # Add your application configuration here
+  key1: value1
+  key2: value2
+  key3: value3

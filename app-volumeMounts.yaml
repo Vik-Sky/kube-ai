@@ -1,0 +1,15 @@
+✨ Attempting to apply the following manifest:
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app-pod
+spec:
+  containers:
+  - name: app-container
+    image: my-app-image
+    volumeMounts:
+    - name: app-volume
+      mountPath: /app/data
+  volumes:
+  - name: app-volume
+    emptyDir: {}
