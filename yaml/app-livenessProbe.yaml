@@ -7,7 +7,6 @@ spec:
   containers:
   - image: gcr.io/k8s-k3s/demo:v1.0.0
     name: app
-
     livenessProbe:
       httpGet:
         path: /
@@ -16,7 +15,6 @@ spec:
       timeoutSeconds: 1
       periodSeconds: 10
       failureThreshold: 3
-
     ports:
     - containerPort: 8080
       name: http
