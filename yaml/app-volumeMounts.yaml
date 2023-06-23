@@ -1,15 +1,39 @@
-✨ Attempting to apply the following manifest:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: app-pod
+  name: app-volume
 spec:
   containers:
-  - name: app-container
-    image: my-app-image
+  - image: gcr.io/kuar-demo/kuard-amd64:1
+    name: app
+
+    livenessProbe:
+      httpGet:
+        path: /healthy
+        port: 8080
+      initialDelaySeconds: 5
+      timeoutSeconds: 1
+      periodSeconds: 10
+      failureThreshold: 3
+
+    readinessProbe:
+      httpGet:
+        path: /ready
+        port: 8080
+      periodSeconds: 2
+      initialDelaySeconds: 0
+      failureThreshold: 3
+      successThreshold: 1
+
+    ports:
+    - containerPort: 8080
+      name: http
+
     volumeMounts:
-    - name: app-volume
-      mountPath: /app/data
+    - mountPath: "/data"
+      name: "data"
+
   volumes:
-  - name: app-volume
-    emptyDir: {}
+  - name: "data"
+    hostPath:
+      path: "/var/lib/app"

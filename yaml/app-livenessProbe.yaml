@@ -1,16 +1,22 @@
-✨ Attempting to apply the following manifest:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: app-liveness-probe
+  name: app-livenessprob
+  namespace: demo
 spec:
   containers:
-  - name: app-container
-    image: my-app-image
+  - image: gcr.io/k8s-k3s/demo:v1.0.0
+    name: app
+
     livenessProbe:
       httpGet:
-        path: /health
-        port: 8080
-      initialDelaySeconds: 30
+        path: /
+        port: 8000
+      initialDelaySeconds: 5
+      timeoutSeconds: 1
       periodSeconds: 10
-      timeoutSeconds: 5
+      failureThreshold: 3
+
+    ports:
+    - containerPort: 8080
+      name: http

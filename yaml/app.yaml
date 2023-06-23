@@ -1,21 +1,14 @@
-✨ Attempting to apply the following manifest:
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Pod
 metadata:
   name: app
+  labels:
+    app: demo
+    run: demo
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: app
-  template:
-    metadata:
-      labels:
-        app: app
-        run: app
-    spec:
-      containers:
-      - name: app
-        image: gcr.io/k8s-k3s/demo:v1.0.0
-        ports:
-        - containerPort: 80
+  containers:
+  - image: gcr.io/k8s-k3s/demo:v1.0.0
+    name: app
+    ports:
+    - containerPort: 8000
+      name: http

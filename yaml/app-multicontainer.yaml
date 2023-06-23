@@ -1,31 +1,22 @@
-✨ Attempting to apply the following manifest:
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Pod
 metadata:
-  name: app-multicontainer
+  name: app-multi-containers
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: app-multicontainer
-  template:
-    metadata:
-      labels:
-        app: app-multicontainer
-    spec:
-      containers:
-      - name: app-container-1
-        image: nginx
-        ports:
-        - containerPort: 80
-      - name: app-container-2
-        image: busybox
-        command: ['sh', '-c', 'echo Hello from the second container! && sleep 3600']
-      - name: app-container-3
-        image: redis
-        env:
-        - name: REDIS_PASSWORD
-          value: "password123"
-        ports:
-        - containerPort: 6379
-      restartPolicy: Always
+  volumes:
+  - name: html
+    emptyDir: {}
+  containers:
+  - name: 1st
+    image: nginx
+    volumeMounts:
+    - name: html
+      mountPath: /usr/share/nginx/html
+  - name: 2nd
+    image: debian
+    volumeMounts:
+    - name: html
+      mountPath: /html
+    command: ["/bin/sh", "-c"]
+    args:
+    - while true; do date >> /html/index.html; sleep 1; done
