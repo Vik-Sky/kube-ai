@@ -1,24 +1,40 @@
 ✨ Attempting to apply the following manifest:
-Sorry, as an AI language model, I am not able to create files. However, I can provide you with a sample YAML manifest for a deployment resource:
-
-```
-apiVersion: apps/v1
-kind: Deployment
+---
+apiVersion: v1
+kind: Pod
 metadata:
-  name: my-app
+  name: app-resource
 spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: my-app
-  template:
-    metadata:
-      labels:
-        app: my-app
-    spec:
-      containers:
-      - name: my-app
-        image: my-image:latest
-        ports:
-        - containerPort: 8080
-```
+  containers:
+  - image: gcr.io/kuar-demo/kuard-amd64:1
+    name: app
+
+    livenessProbe:
+      httpGet:
+        path: /healthy
+        port: 8080
+      initialDelaySeconds: 5
+      timeoutSeconds: 1
+      periodSeconds: 10
+      failureThreshold: 3
+
+    readinessProbe:
+      httpGet:
+        path: /ready
+        port: 8080
+      periodSeconds: 2
+      initialDelaySeconds: 0
+      failureThreshold: 3
+      successThreshold: 1
+
+    ports:
+    - containerPort: 8080
+      name: http
+
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "128Mi"
+      limits:
+        cpu: "100m"
+        memory: "256Mi"
