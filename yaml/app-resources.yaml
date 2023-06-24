@@ -4,10 +4,10 @@ metadata:
   name: app-resource
 spec:
   containers:
-  - image: gcr.io/kuar-demo/kuard-amd64:1
+  - image: gcr.io/tidy-cortex-389712/server-v1
     name: app
     ports:
-    - containerPort: 8080
+    - containerPort: 80
       name: http
     resources:
       requests:
