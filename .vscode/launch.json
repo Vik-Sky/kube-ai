@@ -6,7 +6,7 @@
             "request": "launch",
             "functionName": "kube-ia",
             "gen": "GEN_1",
-            "revision": "",
+            "revision": "1",
             "entryPoint": "helloWorld",
             "testInput": "",
             "region": "europe-central2",
